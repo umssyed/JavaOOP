@@ -1,0 +1,11 @@
+Bad1.java
+Error occurs during compile time
+The name of the class "BADOne" does not match the name of the file "Bad1.java"
+
+Bad2.java
+Error occurs during runtime
+Variable int c attempts to divide by zero which is not legal
+
+Bad3.java
+Error occurs during compile time
+There is incompatible type because char cannot be converted to string. Need to use double qoutes for String.

@@ -1,0 +1,59 @@
+@startuml
+
+User "1" o... "1..*" JobOffer: uses
+User ...|> ComparisonSettings
+User ...|> CurrentJob
+User ...|> CompareResults
+class User {
+    curr_job: CurrentJob
+    jobOffers: ArrayList<JobOffer>
+    compareSettings: ComparisonSettings
+    enterJobOffer(): void
+    modifyCurrJob(): void
+    adjComparisionSettings(): void
+    compareJobOffers(CurrentJob, JobOffer): void
+}
+
+class Job {
+    title: String
+    company: String
+    location: String
+    costOfLiving: int 
+    salary: int
+    bonus: int
+    leave: int
+    matPatleave: int
+    lifeInsurance: int
+    rank: int
+    rankJob(AYS, AYB, LT, MPL, LI): int
+
+}
+
+class CurrentJob extends Job {
+    save(): void
+    cancel(): void
+}
+
+class JobOffer extends Job {
+    save(): void
+    cancel(): void
+    enterJobOffer(): void
+    compareJobOffers(CurrentJob, JobOffer): void
+}
+
+
+class ComparisonSettings{
+    int salary
+    int bonus
+    int leave
+    int matPatleave
+    int lifeInsurance
+    save(): void
+}
+
+class CompareResults {
+    compareJobOffers(CurrentJob, JobOffer): void
+}
+
+
+@enduml

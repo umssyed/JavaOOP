@@ -1,0 +1,19 @@
+Hello! 
+
+My name is Muhammad Uzair Shahid Syed and my preferred name is Uzair Syed.
+
+I am in the Masters of Computer Science program at Georgia Tech and currently debating between the Machine Learning and Computing Systems track.
+My bachelor's was in Electrical Engineering and I have been in the industry for around 7 years as an Industrial Controls Automation engineer.
+I was enrolled in the program in January 2022 and have completed 5 courses so far. This summer I am taking CS 8001-OOP (this course) 
+and Software Development Process. The reason to choose this class was to get a good understanding of Java since the Software Development Process 
+course uses Java and I have not yet been exposed to this language.
+
+My personal interest includes snowboarding, painting, gaming (just finished Horizon Forbidden West on the PS5!) and learning how to code.
+I am currently looking to transition to more of a Software engineering career. My hope is to use the Georgia Tech's Masters program to
+be able to successfully complete this transition. I currently live in Calgary in Canada and work for a major pipeline company.
+
+So far, I am loving this program and have learnt an insane amount thanks to the effort of the professors and TAs in this program!
+
+Thank you for making this course and the program one of the top Comptuer Science program across the world!
+
+Uzair Syed
