@@ -12,34 +12,53 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
+
 public class BirdSitting {
-    private File birdList;
-    private final List<Bird> listOfBirds = new ArrayList<Bird>();
+    private File birdsList;
 
     // Constructors
-    public BirdSitting(File birdListFile) {
-        this.birdList = birdListFile;
+
+    /**
+     * Constructor with 1-arg, File
+     * @param birdList File of bird lists
+     */
+    public BirdSitting(File birdList) {
+        this.birdsList = birdList;
     }
 
+    /**
+     * Constructor with 1-arg, String
+     * @param nameOfFile String name of the file
+     */
     public BirdSitting(String nameOfFile) {
         this(new File(nameOfFile));
     }
 
+
+
     // Getter
-    public File getBirdList() {
-        return birdList;
+
+    /**
+     * This method gets the bird list
+     * @return the birdlist
+     */
+    public File getBirdsList() {
+        return this.birdsList;
     }
 
     // Setter
-    public void setBirdList(File birdList) {
-        this.birdList = birdList;
+
+    /**
+     * This method sets the bird list
+     * @param birdList File
+     */
+    public void setBirdsList(File birdList) {
+        this.birdsList = birdList;
     }
+
 
     // Methods
 
@@ -55,77 +74,80 @@ public class BirdSitting {
             throw new FileNotFoundException("The file was not found....");
         }
 
-        // Bird variables which define the properties of the bird
+        // Bird variables which define properties of the bird
         String birdName;
         String birdType;
-        int birdHunger;
-        int birdHappiness;
-        int birdHonkPower;
-        String birdHomeCity;
 
-        // Store updated information. "updatedInfo" is for
-        List<String> updatedInfo = new ArrayList<String>();
-        List<String> updatedMessages = new ArrayList<String>();
+        // Store updated information
+        String[] updatedInfo = new String[10];
+        String[] updatedMessages = new String[10];
 
         // Scanner for File I/O
-        Scanner birdListFileScanner = new Scanner(getBirdList());
-        String birdListEntry;
-        Scanner lineScanForBirdList;
+        Scanner fileScanner = new Scanner(getBirdsList());
+        Scanner lineScan = null;
 
         try {
-            // Read from BirdList.
-            while(birdListFileScanner.hasNextLine()){
-                // Read from file and use delimiter ","
-                birdListEntry = birdListFileScanner.nextLine();
-                lineScanForBirdList = new Scanner(birdListEntry);
-                lineScanForBirdList.useDelimiter(",");
+            int index = 0;
+            // Read from birdsList
+            while (fileScanner.hasNextLine()) {
+                // Read from file using delimiter ","
+                lineScan = new Scanner (fileScanner.nextLine());
+                lineScan.useDelimiter(",");
 
-                // Update bird name and type in EACH line of the BirdList.csv
-                birdName = lineScanForBirdList.next();
-                birdType = lineScanForBirdList.next();
+                // Update bird name and type for each line
+                birdName = lineScan.next();
+                birdType = lineScan.next();
 
-                // Identify from each line if bird is "goose" or "pigeon"
-                // If not, throw an error "InvalidBirdException"
-                if (birdType.equals("goose") || birdType.equals("pigeon")) {
-                    // Update bird's hunger and happiness
-                    String updatedAfterCare;
-                    birdHunger = lineScanForBirdList.nextInt();
-                    birdHappiness = lineScanForBirdList.nextInt();
+                if (birdType == null && birdType.equals(null)) {
+                    throw new InvalidBirdException();
+                } else {
 
-                    if (birdType.equals("goose")) {
-                        // If bird is "goose", update the Goose's Honk Power
-                        birdHonkPower = lineScanForBirdList.nextInt();
-
-                        // Instantiate Goose instance for this bird.
-                        Goose myGoose = new Goose(birdName, birdHunger, birdHappiness, birdHonkPower);
-
-                        // Perform bird care and store it in "updatedAfterCare"
-                        updatedAfterCare = birdCare(myGoose, birdCare, "goose", updatedMessages);
-
-                    } else {
+                    if (birdType.equals("pigeon")) {
+                        // Update bird's hunger and happiness
+                        int birdHunger = lineScan.nextInt();
+                        int birdHappiness = lineScan.nextInt();
                         // If bird is "pigeon", update the Pigeon's Home City
-                        birdHomeCity = lineScanForBirdList.next();
+                        String birdHomeCity = lineScan.next();
 
                         // Instantiate Pigeon instance for this bird
                         Pigeon myPigeon = new Pigeon(birdName, birdHunger, birdHappiness, birdHomeCity);
 
-                        // Perform bird care and store it in "updatedAfterCare"
-                        updatedAfterCare = birdCare(myPigeon, birdCare, "pigeon", updatedMessages);
+                        // Perform bird care
+                        // After each bird's care, update the updatedInfo
+                        // This will update the stats of each bird
+                        updatedInfo[index] = birdCare(myPigeon, birdCare, "pigeon", updatedMessages);
 
+                    } else if (birdType.equals("goose")) {
+                        // Update bird's hunger and happiness
+                        int birdHunger = lineScan.nextInt();
+                        int birdHappiness = lineScan.nextInt();
+                        // If bird is "goose", update the Goose's Honk Power
+                        int birdHonkPower = lineScan.nextInt();
+
+                        // Instantiate Goose instance for this bird.
+                        Goose myGoose = new Goose(birdName, birdHunger, birdHappiness, birdHonkPower);
+
+                        // Perform bird care
+                        // After each bird's care, update the updatedInfo
+                        // This will update the stats of each bird
+                        updatedInfo[index] = birdCare(myGoose, birdCare, "goose", updatedMessages);
+
+                    } else {
+                        throw new InvalidBirdException();
                     }
-                    // After each bird's care, update the updatedInfo
-                    // This will update the stats of each bird
-                    updatedInfo.add(updatedAfterCare);
-                } else {
-                    throw new InvalidBirdException("This is not a type we know!");
                 }
+                index++;
             }
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        } finally {
+            if (lineScan != null) {
+                lineScan.close();
+            }
         }
 
-        writeToBirdList(birdList, updatedInfo);
+        // Write the new updated information after bird care into the bird list file
+        writeToBirdList(birdsList, updatedInfo);
 
         String str;
         // Check for filename
@@ -136,7 +158,6 @@ public class BirdSitting {
         }
 
         for (String response : updatedMessages) {
-            System.out.println(response);
             summarizeDay(response, str);
         }
 
@@ -151,17 +172,22 @@ public class BirdSitting {
      */
     private void summarizeDay(String birdResponses,
                               String summaryDestination) throws FileNotFoundException {
+        System.out.println("Inside summarizeDay");
+        System.out.println("birdResponses: " + birdResponses);
 
-        File fileOut = new File(summaryDestination);
-        PrintWriter pw = null;
-        PrintWriter fileWriter = null;
+        PrintWriter filePrint = null;
+
         try {
-            pw = new PrintWriter(new FileWriter(summaryDestination, true));
-            pw.println(birdResponses);
-        } catch (Exception e) {
+            File fileOut = new File(summaryDestination);
+            filePrint = new PrintWriter(fileOut);
+            filePrint.println(birdResponses + "\n");
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } finally {
-            pw.close();
+            if (filePrint != null) {
+                filePrint.close();
+                filePrint.flush();
+            }
         }
     }
 
@@ -172,27 +198,32 @@ public class BirdSitting {
      * @param updatedBirdInfo Updated bird information after bird care
      * @throws FileNotFoundException If no file is found, throws FileNotFoundException
      */
-    public void writeToBirdList(File fileOut, List<String> updatedBirdInfo) throws FileNotFoundException {
+    public void writeToBirdList(File fileOut, String[] updatedBirdInfo) throws FileNotFoundException {
         PrintWriter fileWriter = null;
-        //File fileOut = new File("birdsOutput.csv");
+        //File outputFile = new File(fileOut);
+        File fileOuts = new File("birdsOutput.csv");
+
         try {
-            fileWriter = new PrintWriter(fileOut);
-            for(int i=0; i < updatedBirdInfo.size(); i++) {
-                String line = updatedBirdInfo.get(i);
-                fileWriter.println(line);
+            fileWriter = new PrintWriter(fileOuts);
+            for (int i = 0; i < updatedBirdInfo.length; i++) {
+                if (updatedBirdInfo[i] != null) {
+                    System.out.println("Writing...    " + updatedBirdInfo[i]);
+                    fileWriter.println(updatedBirdInfo[i]);
+                }
             }
-        } catch (Exception e){
+
+        }catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             fileWriter.close();
         }
+
     }
 
 
     /**
      * The birdCare method performs care on the Bird regardless of Pigeon or Goose
      * The bird is cared for by either petting or feeding
-     * The method updates the bird list with Bird objects
      * The method updates the updatedMessages. These messages are captured after feeding or petting
      * The method returns a String with updated stats of the bird
      * @param myBird Instance of Bird, this can be Pigeon or Goose
@@ -205,64 +236,69 @@ public class BirdSitting {
     public String birdCare(Bird myBird,
                            File birdCare,
                            String birdType,
-                           List<String> updatedMessages
+                           String[] updatedMessages
                            ) throws FileNotFoundException {
+
+
         // Define Scanner and other variables
-        Scanner birdCareFileScanner = new Scanner(birdCare);
+        Scanner fileScanner = new Scanner(birdCare);
         String birdCareEntry;
-        Scanner lineScanForBirdCare;
+        Scanner lineScan = null;
         String birdName;
-        String care;
-        String returnString = "";
+        String careInstructions;
+        String birdCareOutput = "";
+
 
         // Parse through the birdCare file which instructs
         // whether to pet or feed the bird
         try {
-            while(birdCareFileScanner.hasNextLine()) {
+            int index = 0;
+            while(fileScanner.hasNextLine()) {
                 // Scan each line of the birdCare file
-                birdCareEntry = birdCareFileScanner.nextLine();
-                lineScanForBirdCare = new Scanner(birdCareEntry);
-                lineScanForBirdCare.useDelimiter(",");
+                birdCareEntry = fileScanner.nextLine();
+                lineScan = new Scanner(birdCareEntry);
+                lineScan.useDelimiter(",");
 
-                // In the birdCare file, first column is birds' name and second
-                // is care instructions
-                birdName = lineScanForBirdCare.next();
-                care = lineScanForBirdCare.next();
+                // In the birdCare file, first column is bird name
+                // second column is care instructions
+                birdName = lineScan.next();
+                careInstructions = lineScan.next();
 
                 if (myBird.getName().equals(birdName)) {
+                    System.out.println("index is: " + index + ",  " + myBird.getName() + "     " + birdName);
                     // If the bird's name is same as bird's name in the
                     // birdCare file, then perform care
 
-                    // Add the bird to the list of birds <Bird>
-                    listOfBirds.add(myBird);
-
                     // Perform pet or feed based on instructions
-                    if (care.equals("pet")) {
-                        updatedMessages.add(myBird.receivePets());
+                    if (careInstructions.equals("pet")) {
+                        updatedMessages[index] = myBird.receivePets();
                     }
-                    if (care.equals("feed")) {
-                        updatedMessages.add(myBird.eatFood());
+                    if (careInstructions.equals("feed")) {
+                        updatedMessages[index] = myBird.eatFood();
                     }
 
                     // Update the return string with the format:
                     // Name, Type, Hunger, Happiness, HomeCity/HonkPower
-                    returnString = myBird.getName() + ","
+                    birdCareOutput = myBird.getName() + ","
                             + birdType + ","
                             + String.valueOf(myBird.getHunger()) + ","
                             + String.valueOf(myBird.getHappiness());
 
                     if (birdType.equals("pigeon")) {
-                        returnString += "," + ((Pigeon)myBird).getHomeCity();
+                        birdCareOutput += "," + ((Pigeon)myBird).getHomeCity();
                     } else {
-                        returnString += "," + String.valueOf(((Goose)myBird).getHonkPower());
+                        birdCareOutput += "," + String.valueOf(((Goose)myBird).getHonkPower());
                     }
                     break;
                 }
+
+                index++;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return returnString;
+
+        return birdCareOutput;
     }
 
     /**
@@ -280,10 +316,16 @@ public class BirdSitting {
      * This method goes through the list of birds <Bird>
      * and prints out to the console each birds feelings!
      */
-    public void birdInventory(){
-        for(Bird bird: listOfBirds) {
-            System.out.println(bird.speak());
-        }
+    public void birdInventory() throws FileNotFoundException {
+        /**
+         * This method instantiates all birds in birdsList
+         * o For each bird, call and print the returned String of their speak() method to check up on how they
+         * are doing
+         * o Hint: An array can be used here
+         */
+        File birdsList = getBirdsList();
+
     }
+
 }
 

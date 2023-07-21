@@ -11,17 +11,27 @@
  */
 
 public class InvalidBirdException extends RuntimeException {
-    public InvalidBirdException() {
 
-        super();
+    /**
+     * Constructor with no args
+     */
+    public InvalidBirdException() {
+        super("Your bird is invalid!");
     };
 
+    /**
+     * Constructor with 1-arg String
+     * @param s String
+     */
     public InvalidBirdException(String s) {
         super(s);
     }
 
+    /*
+     * Method to get message
+     */
     public String getMessage() {
-        return this.getMessage();
+        return super.getMessage();
     }
 
 }

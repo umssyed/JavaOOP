@@ -17,20 +17,43 @@ public class Goose extends Bird{
     private static final int DEFAULT_HONKPOWER = 8;
 
     // Constructors
+
+    /**
+     * Constructor with 4-args
+     * @param name Name
+     * @param hunger Hunger
+     * @param happiness Happiness
+     * @param honkPower Honk Power
+     */
     public Goose(String name, int hunger, int happiness, int honkPower) {
         super(name, hunger, happiness);
         this.honkPower = honkPower;
     }
+
+    /**
+     * Constructor with 1-arg
+     * @param name Name
+     */
     public Goose(String name) {
         this(name, DEFAULT_HUNGER, DEFAULT_HAPPINESS, DEFAULT_HONKPOWER);
     }
 
     // Getters
+
+    /**
+     * The method gets honk power of the Goose
+     * @return int honk power
+     */
     public int getHonkPower() {
         return honkPower;
     }
 
     // Setters
+
+    /**
+     * The method sets honk power of the Goose
+     * @param honkPower Goose honk power
+     */
     public void setHonkPower(int honkPower) {
         this.honkPower = honkPower;
     }
