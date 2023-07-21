@@ -4,18 +4,16 @@
  */
 
 
-/**
- * This class represents a BirdSitting class
- * @author Muhammad Uzair Shahid Syed
- * @version 1.0
- */
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-
+/**
+ * This class represents a BirdSitting class
+ * @author Muhammad Uzair Shahid Syed
+ * @version 1.0
+ */
 public class BirdSitting {
     private File birdsList;
 
@@ -68,9 +66,9 @@ public class BirdSitting {
      * @param birdCare File birdCare where it instructs petting/feeding for each bird
      * @throws FileNotFoundException If no file is found, throws FileNotFoundException
      */
-    public void startBirdSitting(File birdCare) throws FileNotFoundException {
+    public void startBirdSitting(File birdCare) throws FileNotFoundException, InvalidBirdException {
         // Check if birdCare file exists
-        if(!birdCare.exists()) {
+        if (!birdCare.exists()) {
             throw new FileNotFoundException("The file was not found....");
         }
 
@@ -91,7 +89,7 @@ public class BirdSitting {
             // Read from birdsList
             while (fileScanner.hasNextLine()) {
                 // Read from file using delimiter ","
-                lineScan = new Scanner (fileScanner.nextLine());
+                lineScan = new Scanner(fileScanner.nextLine());
                 lineScan.useDelimiter(",");
 
                 // Update bird name and type for each line
@@ -133,7 +131,7 @@ public class BirdSitting {
                         updatedInfo[index] = birdCare(myGoose, birdCare, "goose", updatedMessages);
 
                     } else {
-                        throw new InvalidBirdException();
+                        throw new InvalidBirdException("No birds found!");
                     }
                 }
                 index++;
@@ -172,8 +170,6 @@ public class BirdSitting {
      */
     private void summarizeDay(String birdResponses,
                               String summaryDestination) throws FileNotFoundException {
-        System.out.println("Inside summarizeDay");
-        System.out.println("birdResponses: " + birdResponses);
 
         PrintWriter filePrint = null;
 
@@ -201,18 +197,16 @@ public class BirdSitting {
     public void writeToBirdList(File fileOut, String[] updatedBirdInfo) throws FileNotFoundException {
         PrintWriter fileWriter = null;
         //File outputFile = new File(fileOut);
-        File fileOuts = new File("birdsOutput.csv");
+        //File fileOuts = new File("birdsOutput.csv");
 
         try {
-            fileWriter = new PrintWriter(fileOuts);
+            fileWriter = new PrintWriter(fileOut);
             for (int i = 0; i < updatedBirdInfo.length; i++) {
                 if (updatedBirdInfo[i] != null) {
-                    System.out.println("Writing...    " + updatedBirdInfo[i]);
                     fileWriter.println(updatedBirdInfo[i]);
                 }
             }
-
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             fileWriter.close();
@@ -253,7 +247,7 @@ public class BirdSitting {
         // whether to pet or feed the bird
         try {
             int index = 0;
-            while(fileScanner.hasNextLine()) {
+            while (fileScanner.hasNextLine()) {
                 // Scan each line of the birdCare file
                 birdCareEntry = fileScanner.nextLine();
                 lineScan = new Scanner(birdCareEntry);
@@ -265,7 +259,7 @@ public class BirdSitting {
                 careInstructions = lineScan.next();
 
                 if (myBird.getName().equals(birdName)) {
-                    System.out.println("index is: " + index + ",  " + myBird.getName() + "     " + birdName);
+
                     // If the bird's name is same as bird's name in the
                     // birdCare file, then perform care
 
@@ -285,9 +279,9 @@ public class BirdSitting {
                             + String.valueOf(myBird.getHappiness());
 
                     if (birdType.equals("pigeon")) {
-                        birdCareOutput += "," + ((Pigeon)myBird).getHomeCity();
+                        birdCareOutput += "," + ((Pigeon) myBird).getHomeCity();
                     } else {
-                        birdCareOutput += "," + String.valueOf(((Goose)myBird).getHonkPower());
+                        birdCareOutput += "," + String.valueOf(((Goose) myBird).getHonkPower());
                     }
                     break;
                 }
@@ -313,7 +307,7 @@ public class BirdSitting {
 
 
     /**
-     * This method goes through the list of birds <Bird>
+     * This method goes through the list of birds
      * and prints out to the console each birds feelings!
      */
     public void birdInventory() throws FileNotFoundException {
@@ -323,7 +317,73 @@ public class BirdSitting {
          * are doing
          * o Hint: An array can be used here
          */
-        File birdsList = getBirdsList();
+        File birdsListNew = getBirdsList();
+
+        String birdName;
+        String birdType;
+
+        // Store updated information in Bird[]
+        Bird[] myBirds = new Bird[10];
+
+        // Scanner for File I/O
+        Scanner fileScanner = new Scanner(birdsListNew);
+        Scanner lineScan = null;
+
+        try {
+            int index = 0;
+            // Read file
+            while (fileScanner.hasNextLine()) {
+
+                lineScan = new Scanner(fileScanner.nextLine());
+                lineScan.useDelimiter(",");
+
+                // Update bird name and type for each line
+                birdName = lineScan.next();
+                birdType = lineScan.next();
+
+                if (birdType == null && birdType.equals(null)) {
+                    throw new InvalidBirdException();
+                } else {
+
+                    if (birdType.equals("pigeon")) {
+                        // Update bird's hunger and happiness
+                        int birdHunger = lineScan.nextInt();
+                        int birdHappiness = lineScan.nextInt();
+                        // If bird is "pigeon", update the Pigeon's Home City
+                        String birdHomeCity = lineScan.next();
+
+                        // Instantiate Pigeon instance for this bird
+                        Pigeon myPigeon = new Pigeon(birdName, birdHunger, birdHappiness, birdHomeCity);
+                        myBirds[index] = myPigeon;
+
+                    } else if (birdType.equals("goose")) {
+                        // Update bird's hunger and happiness
+                        int birdHunger = lineScan.nextInt();
+                        int birdHappiness = lineScan.nextInt();
+                        // If bird is "goose", update the Goose's Honk Power
+                        int birdHonkPower = lineScan.nextInt();
+
+                        // Instantiate Goose instance for this bird.
+                        Goose myGoose = new Goose(birdName, birdHunger, birdHappiness, birdHonkPower);
+                        myBirds[index] = myGoose;
+
+                    } else {
+                        throw new InvalidBirdException();
+                    }
+                }
+                index++;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        for (Bird bird: myBirds) {
+            if (bird != null) {
+                System.out.println(bird.speak());
+            }
+
+        }
 
     }
 

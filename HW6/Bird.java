@@ -23,7 +23,7 @@ public abstract class Bird {
      * @param hunger Hunger
      * @param happiness Happiness
      */
-    public Bird(String name, int hunger, int happiness){
+    public Bird(String name, int hunger, int happiness) {
         this.name = name;
         this.hunger = hunger;
         this.happiness = happiness;
@@ -59,7 +59,7 @@ public abstract class Bird {
 
     /**
      * This method sets name of the bird
-     * @param name
+     * @param name String name
      */
     public void setName(String name) {
         this.name = name;
@@ -67,7 +67,7 @@ public abstract class Bird {
 
     /**
      * This method sets happiness of the bird
-     * @param happiness
+     * @param happiness int Happiness
      */
     public void setHappiness(int happiness) {
         this.happiness = happiness;
@@ -75,7 +75,7 @@ public abstract class Bird {
 
     /**
      * This method sets hunger of the bird
-     * @param hunger
+     * @param hunger in Hunger
      */
     public void setHunger(int hunger) {
         this.hunger = hunger;
@@ -108,13 +108,13 @@ public abstract class Bird {
      */
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof  Bird)) {
+        if (!(o instanceof  Bird)) {
             return false;
         } else {
             Bird tempBird = (Bird) o;
-            if (tempBird.name.equals(this.name) &&
-                    tempBird.hunger == this.hunger &&
-                    tempBird.happiness == this.happiness) {
+            if (tempBird.name.equals(this.name)
+                    && tempBird.hunger == this.hunger
+                    && tempBird.happiness == this.happiness) {
                 return true;
             }
         }

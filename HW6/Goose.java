@@ -9,7 +9,7 @@
  * @version 1.0
  */
 
-public class Goose extends Bird{
+public class Goose extends Bird {
     // Variables
     private int honkPower;
     private static final int DEFAULT_HUNGER = 70;
@@ -71,13 +71,13 @@ public class Goose extends Bird{
         String speak = "";
 
         // Goose will repeat the sound depending on honkPower
+        // If happiness is low, it will be frustrated!!!
         for (int i = 0; i < this.getHonkPower(); i++) {
-            // If happiness is low, it will be frustrated!!!
-           if (this.getHappiness() < 30) {
-               speak += sound.toUpperCase() + " ";
-           } else {
-               speak += sound + " ";
-           }
+            if (this.getHappiness() < 30) {
+                speak += sound.toUpperCase() + " ";
+            } else {
+                speak += sound + " ";
+            }
         }
         return speak;
     }
@@ -103,8 +103,8 @@ public class Goose extends Bird{
         // If initially the happiness was greater than 80, Goose gives gift
         // Otherwise honks for more pets
         if (initialHappiness >= 80) {
-            return this.getName() + " waddles off and hands me a " +
-                    "flower after being pet";
+            return this.getName() + " waddles off and hands me a "
+                    + "flower after being pet";
         } else {
             return this.getName() + " honks at me for more pets";
         }
@@ -128,20 +128,20 @@ public class Goose extends Bird{
             }
 
             // Goose expresses satisfaction
-            return this.getName() + " was not hungry but ate a little " +
-                    "food anyways.";
+            return this.getName() + " was not hungry but ate a little "
+                    + "food anyways.";
         } else {
             // Hunger is set back to 0 and
             // Goose expresses satisfaction
             this.setHunger(0);
             return this.getName() + " thorougly enjoyed the meal.";
-         }
+        }
     }
 
 
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof Goose)) {
+        if (!(o instanceof Goose)) {
             return false;
         } else {
             Goose tempGoose = (Goose) o;
