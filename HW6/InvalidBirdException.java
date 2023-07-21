@@ -27,8 +27,9 @@ public class InvalidBirdException extends RuntimeException {
         super(s);
     }
 
-    /*
-     * Method to get message
+    /**
+     * This method receives the message
+     * @return String message
      */
     public String getMessage() {
         return super.getMessage();

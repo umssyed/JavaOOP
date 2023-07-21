@@ -10,7 +10,7 @@
  * @version 1.0
  */
 
-public class Pigeon extends Bird{
+public class Pigeon extends Bird {
     // Variables
     private String homeCity;
     private static final int DEFAULT_HUNGER = 90;
@@ -53,7 +53,7 @@ public class Pigeon extends Bird{
 
     /**
      * This method sets the home city of the Pigeon
-     * @param homeCity
+     * @param homeCity String homeCity
      */
     public void setHomeCity(String homeCity) {
         this.homeCity = homeCity;
