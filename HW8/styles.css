@@ -1,0 +1,65 @@
+/* Label style */
+.labelfield-custom {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Calibri";
+    -fx-text-fill: #504f4f;
+}
+
+/* Text Field style */
+.textfield-custom {
+    -fx-font-size: 16px;
+    -fx-font-family: "Calibri";
+    -fx-text-fill: #358585;
+    -fx-border-color: #b5b6b5;
+    -fx-border-width: 2px;
+    -fx-background-radius: 0px;
+    -fx-min-width: 350px;
+    -fx-min-height: 50px;
+}
+
+.textfield-custom:focused {
+    -fx-border-color: #358585;
+}
+
+/* Reset button style */
+.resetbutton {
+    -fx-background-color: #ce6060;
+    -fx-text-fill: white;
+    -fx-font-family: "Calibri";
+    -fx-font-size: 16px;
+    -fx-padding:5px 10px;
+}
+
+.resetbutton:hover {
+    -fx-background-color: #ad4848;
+    -fx-font-weight: bold;
+}
+
+.resetbutton:pressed {
+    -fx-background-color: #8d1d1d;
+    -fx-font-weight: bold;
+}
+
+/* Submit Idea style */
+.buttonAll {
+    -fx-background-color: #71c4b7;
+    -fx-text-fill: white;
+    -fx-font-family: "Calibri";
+    -fx-font-size: 16px;
+    -fx-padding: 5px 10px;
+}
+
+.buttonAll:hover {
+    -fx-background-color: #58ada0;
+    -fx-font-weight: bold;
+}
+
+.buttonAll:pressed {
+    -fx-background-color: #2e9b8a;
+    -fx-font-weight: bold;
+}
+
+.scroll-pane {
+    -fx-max-width: 95em;
+}
