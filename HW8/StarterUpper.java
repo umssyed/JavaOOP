@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
+import javafx.scene.*;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -113,7 +113,6 @@ public class StarterUpper extends Application {
         gridPane.add(solutionsField, 1, 5);
 
 
-
         //=======================BUTTONS===================
         // SUBMIT IDEA: Button that adds the current idea written in the fields
         // to a List of StartUpIdea object
@@ -194,17 +193,15 @@ public class StarterUpper extends Application {
             try {
                 Boolean fileSaveConfirmation = FileUtil.saveIdeasToFile(ideasList, saveFile);
                 System.out.println("File successfully saved!");
-            } catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println("File could not be saved!");
             }
         });
 
 
-
-
-
         //=================JAVAFX=================//
-
+        // Create scene
+        Scene scene = new Scene(vbox, 800, 800);
 
         // Add a Hbox at the bottom of the Vbox
         FlowPane flowPane = new FlowPane();
@@ -234,8 +231,7 @@ public class StarterUpper extends Application {
         vbox.getChildren().addAll(label, formTitle, gridPane, stackPane, observableUI);
         vbox.setStyle("-fx-background-color: #e4e7e6;");
 
-        // Create scene
-        Scene scene = new Scene(vbox, 800, 800);
+
 
         // Add stylesheet css
         scrollPane.getStyleClass().add("scroll-pane");
